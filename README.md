@@ -1,7 +1,7 @@
 # envoygw
-## This document shows how to 
-1 - Deploy Envoy implementation of Kubernetes Gateway 
-2 - deploy a shared gateway to create TCPRoutes to handle multiple backends across different namespaces.
+## This document shows how to:
+> 1 - Deploy Envoy implementation of Kubernetes Gateway 
+> 2 - deploy a shared gateway to create TCPRoutes to handle multiple backends across different namespaces.
 
 
 ### Step1 - Deploy Envoy Gateway ( Note TCPRoute is implemented in release 0.3.0 onwards )
@@ -22,7 +22,7 @@
 
 `kubectl apply -f ns.yaml`
 
-### Step4 - Deploy gateway
+### Step4 - Deploy gateway`
 
 `kubectl apply -f db-gw.yaml 
 
