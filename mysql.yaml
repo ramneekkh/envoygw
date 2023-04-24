@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment-1
+  namespace: ns1 
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+      tier: backend
+      db: mysql-1
+  template:
+    metadata:
+      labels:
+        app: mysql
+        tier: backend
+        db: mysql-1
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        ports:
+        - containerPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service-1
+  namespace: ns1 
+spec:
+  selector:
+    app: mysql
+    tier: backend
+    db: mysql-1
+  ports:
+  - name: mysql-port
+    port: 3306
+    targetPort: 3306
+
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TCPRoute
+metadata:
+  name: ns1db1
+  namespace: ns1
+spec:
+  parentRefs:
+  - name: db-gateway
+    namespace: db-gw
+    sectionName: ns1db1
+  rules:
+  - backendRefs:
+    - name: mysql-service-1
+      port: 3306

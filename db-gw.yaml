@@ -1,0 +1,24 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
+metadata:
+  name: db-gateway
+  namespace: db-gw
+spec:
+  gatewayClassName: eg
+  listeners:
+  - name: ns1db1
+    protocol: TCP
+    port: 3306
+    allowedRoutes:
+      namespaces:
+        from: All
+      kinds:
+      - kind: TCPRoute
+  - name: ns2db2
+    protocol: TCP
+    port: 3307
+    allowedRoutes:
+      namespaces:
+        from: All
+      kinds:
+      - kind: TCPRoute
